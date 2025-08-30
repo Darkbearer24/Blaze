@@ -1,0 +1,41 @@
+<!-- pages/menu.html -->
+<div class="menu-nav-container" id="menu-navigation">
+  <div class="menu-nav">
+    <a href="#gourmet-burgers" class="menu-nav-item active" data-category="gourmet-burgers">Burgers</a>
+    <a href="#wraps" class="menu-nav-item" data-category="wraps">Wraps</a>
+    <a href="#sides" class="menu-nav-item" data-category="sides">Sides</a>
+    <a href="#pasta" class="menu-nav-item" data-category="pasta">Pasta</a>
+    <a href="#og-momos" class="menu-nav-item" data-category="og-momos">OG Momos</a>
+    <a href="#chinese" class="menu-nav-item" data-category="chinese">Chinese</a>
+    <a href="#main-course" class="menu-nav-item" data-category="main-course">Main Course</a>
+    <a href="#cold-beverages" class="menu-nav-item" data-category="cold-beverages">Cold Drinks</a>
+    <a href="#hot-beverages" class="menu-nav-item" data-category="hot-beverages">Hot Drinks</a>
+    <a href="#desserts" class="menu-nav-item" data-category="desserts">Desserts</a>
+  </div>
+</div>
+  
+<!-- Menu content container -->
+<div class="menu-content-wrapper">
+  <div class="menu-container" id="menu-content-container">
+    <!-- Default content - will be loaded dynamically -->
+    <img src="./assets/menu/GOURMET BURGERS.svg" alt="Gourmet Burgers" class="menu-svg" />
+  </div>
+</div>
+
+<!-- Script to ensure menu content is loaded -->
+<script>
+  // Ensure menu content is loaded when page is accessed directly
+  document.addEventListener('DOMContentLoaded', function() {
+    // Small delay to ensure DOM is fully loaded
+    setTimeout(function() {
+      // If content container is empty, load default content
+      const contentContainer = document.getElementById('menu-content-container');
+      if (contentContainer && !contentContainer.hasChildNodes()) {
+        // If loadMenuContent is available, use it
+        if (typeof window.loadMenuContent === 'function') {
+          window.loadMenuContent('gourmet-burgers');
+        }
+      }
+    }, 100);
+  });
+</script>

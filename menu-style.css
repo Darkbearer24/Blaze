@@ -1,0 +1,93 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    max-width: 430px; /* Typical phone width */
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+    background: #fff;
+    color: #333;
+  }
+  
+  /* Menu Header with Navigation */
+  .menu-header {
+    background: #fff;
+    padding: 0.5rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  .menu-nav {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .menu-nav .nav-link {
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    color: #333;
+    flex: 0 0 auto;
+    transition: color 0.3s;
+  }
+  
+  .menu-nav .nav-link.active,
+  .menu-nav .nav-link:hover {
+    color: #e74c3c;
+    font-weight: bold;
+  }
+  
+  /* Horizontal Navigation */
+  .horizontal-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #fff;
+    overflow: hidden;
+  }
+  
+  .nav-container {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    padding: 1rem 0;
+    scroll-behavior: smooth;
+  }
+  
+  .horizontal-nav-item {
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    color: #970f2c;
+    opacity: 0.4;
+    flex: 0 0 auto;
+    transition: color 0.3s, font-weight 0.3s, opacity 0.3s;
+  }
+  
+  .horizontal-nav-item.active,
+  .horizontal-nav-item:hover {
+    color: #970f2c;
+    opacity: 1;
+    font-weight: bold;
+  }
+  
+  /* Menu Content Area */
+  .menu-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    overflow-y: auto;
+    height: auto;
+    scroll-behavior: smooth;
+  }
+  
+  /* Styling for the imported SVG */
+  .menu-svg {
+    width: 100%;
+    height: auto;
+    /* The SVG will take its natural height; if it’s too long, the container will scroll */
+  }
+  

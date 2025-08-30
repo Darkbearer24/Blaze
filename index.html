@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Mobile-friendly scaling -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Cache control - force refresh -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Blaze Web App - SPA</title>
+  <meta name="description" content="Blaze Restaurant - Flavours That Flirt. Gourmet burgers, wraps, pasta and more.">
+  <meta name="msapplication-navbutton-color" content="#9d1c20">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#9d1c20">
+  <!-- Firefox and Opera use CSS-based theming instead of meta tags -->
+  <!-- Favicon -->
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="shortcut icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+  
+  <!-- Preload critical assets -->
+  <link rel="preload" href="assets/Blaze PNG 3.svg" as="image" type="image/svg+xml">
+  <link rel="preload" href="styles.css" as="style">
+  <link rel="preload" href="script.js" as="script">
+  <link rel="preload" href="menu-wheel.css" as="style">
+  
+  <!-- Critical CSS inline for faster first paint -->
+  <style>
+    /* Critical CSS for initial render */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: #fff;
+      color: #333;
+    }
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(157, 28, 32, 0.3);
+      border-radius: 50%;
+      border-top-color: #9d1c20;
+      animation: spin 1s ease-in-out infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    #loading-indicator {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.8);
+      z-index: 9999;
+    }
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fff;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(157, 28, 32, 0.2);
+    }
+    .logo {
+      width: 7rem;
+      height: auto;
+    }
+  </style>
+  
+  <!-- Main stylesheet with non-blocking loading -->
+  <link rel="stylesheet" href="styles.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="menu-wheel.css" media="print" onload="this.media='all'">
+  <!-- Fallback for browsers that don't support onload -->
+  <noscript>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="menu-wheel.css">
+  </noscript>
+  
+  <!-- Cache-busting version parameter - moved to inline for faster execution -->
+  <script>
+    // Set the app version - this should match package.json and manifest.json
+    const version = "2.1.2";
+    
+    // Function to add version parameter to resource URLs
+    function addVersionToResources() {
+      // Apply to all stylesheet links
+      document.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
+        if (link.href && !link.href.includes('v=')) {
+          link.href = appendVersionParam(link.href);
+        }
+      });
+      
+      // Apply to all script tags with src attribute
+      document.querySelectorAll('script[src]').forEach(script => {
+        if (script.src && !script.src.includes('version.js') && !script.src.includes('v=')) {
+          script.src = appendVersionParam(script.src);
+        }
+      });
+    }
+    
+    // Helper function to append version parameter
+    function appendVersionParam(url) {
+      if (!url) return url;
+      const separator = url.includes('?') ? '&' : '?';
+      return `${url}${separator}v=${version}`;
+    }
+    
+    // Run immediately
+    addVersionToResources();
+  </script>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="top-bar">
+    <!-- CLICKABLE LOGO (links to #home) -->
+    <a href="#home" class="logo-link">
+      <img
+        src="assets/Blaze PNG 3.svg"
+        alt="Blaze Logo"
+        class="logo"
+      />
+    </a>
+
+    <!-- FLAVOURS THAT FLIRT in Beautiful Freak Bold -->
+    <h1 class="title">
+      <span class="dash">-</span>
+      <span class="gold-text">FLAVOURS</span>
+      <span class="black-text">THAT</span>
+      <span class="gold-text">FLIRT</span>
+      <span class="dash">-</span>
+    </h1>
+
+    <!-- HAMBURGER ICON (Opens side nav) -->
+    <div class="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    
+    <!-- SCROLLER INSIDE HEADER -->
+    <div class="scroller" data-animated="true">
+      <div class="scroller__inner">
+        <img
+          src="assets/moving_frame.svg"
+          alt="Scrolling banner"
+          class="marquee-img"
+        />
+      </div>
+    </div>
+  </header>
+
+  <!-- SIDE NAVIGATION -->
+  <nav class="side-nav">
+    <!-- (Removed the hamburger here) -->
+
+    <ul>
+      <li><a href="#home">HOME</a></li>
+      <li><a href="#hours-location">HOURS &amp; LOCATION</a></li>
+      <li><a href="#menu">MENU</a></li>
+      <li><a href="#about">ABOUT</a></li>
+      <li><a href="#order-online">ORDER ONLINE</a></li>
+      <li><a href="#contact">CONTACT</a></li>
+      <li><a href="tel:+919711313434">(+91) 9711313434</a></li>
+    </ul>
+
+    <hr />
+    <div class="nav-spacer"></div>
+
+    <div class="powered-by-container">
+      <img
+        src="assets/powered by.svg"
+        alt="POWERED BY TEAM RENT & RIDE"
+        class="powered-by-img"
+      >
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT AREA (SPA partials load here) -->
+  <main id="app"></main>
+
+  <!-- App Shell Loading Indicator -->
+  <div id="loading-indicator">
+    <div class="loading-spinner"></div>
+  </div>
+  
+  <!-- Floating Action Buttons -->
+  <div class="floating-buttons">
+    <a href="#order-online" class="floating-btn order-btn">
+      <img src="assets/orderonline.svg" alt="ORDER ONLINE" class="floating-btn-img">
+    </a>
+    <a href="tel:+919711313434" class="floating-btn call-btn">
+      <img src="assets/number.svg" alt="CALL (+91) 9711313434" class="floating-btn-img">
+    </a>
+  </div>
+  
+  <!-- Scroller Script -->
+  <script src="scroller.js"></script>
+  <!-- Menu Scroll Behavior Script -->
+  <script src="menu-scroll.js"></script>
+  <!-- AJAX Navigation Script -->
+  <script src="ajax-navigation.js"></script>
+  
+  <!-- Defer non-critical scripts -->
+  <script src="version.js?v=2.1.2" defer></script>
+  <script src="script.js" defer></script>
+  <script src="menu-wheel.js" defer></script>
+  <script src="menu-swipe.js" defer></script>
+  
+  <!-- Async load non-critical scripts -->
+  <script src="menu-transitions.js" async></script>
+  <script src="dissolve-animation.js" async></script>
+  <script src="menu-scroll.js" async></script>
+  <script src="scroller.js" async></script>
+  <script src="floating-buttons.js" async></script>
+  <script src="ajax-navigation.js" async></script>
+  <script src="optimize-images.js" async></script>
+  <script src="compress-assets.js" async></script>
+  
+  <noscript>
+    <div style="padding: 20px; text-align: center; background-color: #f8d7da; color: #721c24; margin: 20px;">
+      JavaScript is required to use this application. Please enable JavaScript in your browser settings.
+    </div>
+  </noscript>
+  
+  <!-- Emergency fix for floating buttons -->
+  <script>
+    (function() {
+      // Run immediately and after DOM is loaded
+      function initButtonControl() {
+        const floatingButtons = document.querySelector('.floating-buttons');
+        const sideNav = document.querySelector('.side-nav');
+        const hamburger = document.querySelector('.hamburger');
+        
+        if (!floatingButtons || !sideNav) return;
+        
+        // Function to update button visibility
+        function updateButtonVisibility() {
+          const currentHash = window.location.hash.slice(1);
+          const isNavOpen = sideNav.classList.contains('open');
+          
+          // Show buttons only on home page AND when navigation is closed
+          if ((currentHash === '' || currentHash === 'home') && !isNavOpen) {
+            floatingButtons.style.display = 'flex';
+          } else {
+            floatingButtons.style.display = 'none';
+          }
+        }
+        
+        // Run immediately
+        updateButtonVisibility();
+        
+        // Add event listeners
+        window.addEventListener('hashchange', updateButtonVisibility);
+        
+        if (hamburger) {
+          hamburger.addEventListener('click', function() {
+            // Use timeout to ensure class changes have been applied
+            setTimeout(updateButtonVisibility, 50);
+          });
+        }
+        
+        // Handle clicks on navigation items
+        document.querySelectorAll('.side-nav a').forEach(link => {
+          link.addEventListener('click', function() {
+            setTimeout(updateButtonVisibility, 50);
+          });
+        });
+        
+        // Handle clicks outside navigation
+        document.addEventListener('click', function(e) {
+          if (sideNav.classList.contains('open') && 
+              !sideNav.contains(e.target) && 
+              !hamburger.contains(e.target)) {
+            setTimeout(updateButtonVisibility, 50);
+          }
+        });
+      }
+      
+      // Run immediately
+      initButtonControl();
+      
+      // Also run after DOM is fully loaded
+      document.addEventListener('DOMContentLoaded', initButtonControl);
+    })();
+  </script>
+  
+  <!-- Register service worker -->
+  <script>
+    // Register service worker for offline support
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js?v=' + version)
+          .then(registration => {
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            
+            // Check for updates every hour
+            setInterval(() => {
+              registration.update();
+            }, 3600000); // 1 hour
+          })
+          .catch(error => {
+            console.log('ServiceWorker registration failed: ', error);
+          });
+      });
+    }
+  </script>
+</body>
+</html>
